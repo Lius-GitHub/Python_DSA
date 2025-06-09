@@ -27,7 +27,7 @@ class MyLinkedList:
     def __init__(self):
         self.head:Node = None
         self.length:int = 0
-    # T： O(n) S:O(1)
+
     def get(self, index: int) -> int:
         # Validate index: must be within [0, length-1]
         if not isinstance(index, int) or index < 0 or index >= self.length:
@@ -37,29 +37,29 @@ class MyLinkedList:
             curr = curr.next
             index -=1
         return curr.val      
-    # T： O(1) S:O(1)
+
     def addAtHead(self, val: int) -> None:
         self.head: Node = Node(val, self.head) 
         self.length += 1
         return
-    # T： O(n) S:O(1)
+
     def addAtTail(self, val: int) -> None:
         # Handle empth linked list
         if self.length == 0:
             self.addAtHead(val)
-            return
+            return None
         # Traverse to the tail node
         curr = self.head
         for _ in range(self.length-1):
             curr = curr.next
         curr.next = Node(val, None)
         self.length += 1
-        return    
-    # T： O(n) S:O(1)
+        return None   
+
     def addAtIndex(self, index: int, val: int) -> None:
         # Handle invalid index
         if not isinstance(index, int) or index < 0 or index > self.length:
-            return -1
+            return None
         #Handle at head or at tail
         if index == 0:
             self.addAtHead(val)
@@ -73,12 +73,12 @@ class MyLinkedList:
             pre = pre.next
         pre.next = Node(val, pre.next)
         self.length += 1
-        return        
-    # T： O(n) S:O(1)
+        return  None
+
     def deleteAtIndex(self, index: int) -> None:
         # check invalid index
         if not isinstance(index, int) or index < 0 or index >= self.length:
-            return -1
+            return None
         # dummy_head -> self.head-> second node or None
         # Traverse to the previous node of the deleting index
         dummy_head = Node(0, self.head)
@@ -87,11 +87,10 @@ class MyLinkedList:
             pre = pre.next
         # Unlink the node
         pre.next = pre.next.next
-        # upadte the head if index == 0
-        if index == 0:
-            self.head = dummy_head.next
+        # upadte the head incase index == 0
+        self.head = dummy_head.next
         self.length -= 1
-        return
+        return None
 
 
 206. Reverse Linked List
@@ -177,7 +176,7 @@ class Solution:
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
-# Time Complexity: O(n)
+# Time Complexity: O(m+n)
 # Space Complexity: O(1)
 class Solution:
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
@@ -219,11 +218,9 @@ class Solution:
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
         fast, slow = head, head
-        pos = 0
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-            pos += 1
             # found a loop
             if slow == fast:
                 fast = head
@@ -245,5 +242,3 @@ class Solution:
 #             visited.add(cur)
 #             cur = cur.next
 #         return None            
-        
-
